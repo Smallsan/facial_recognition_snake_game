@@ -111,9 +111,7 @@ class Snake(tk.Canvas):
                 break
             result = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
 
-            # Check if result is a list
             if isinstance(result, list):
-                # If it's a list, use the first dictionary in the list
                 result = result[0]
 
             expression = result['dominant_emotion']
@@ -128,13 +126,10 @@ class Snake(tk.Canvas):
                 self.SNAKE_SPEED = self.SNAKE_SPEED - 1
                 print("Sad expression detected, speed decreased to", self.SNAKE_SPEED)
 
-            # Update the speed display
             self.itemconfigure(self.speed_text, text=f"Speed: {self.SNAKE_SPEED}")
 
-            # Display the frame
             cv2.imshow('Webcam Feed', frame)
 
-            # Break the loop if 'q' is pressed
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 print("Exiting adjust_speed_based_on_expression")
                 break
