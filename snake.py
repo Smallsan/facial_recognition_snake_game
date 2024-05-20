@@ -8,14 +8,13 @@ class Snake(tk.Canvas):
     SNAKE_SPEED = 100
 
     def __init__(self):
-        super().__init__(width=800, height=820, background="black", highlightthickness=0)
+        super().__init__(width=640, height=360, background="black", highlightthickness=0)
 
-        self.speed_text = self.create_text(70, 10, anchor="nw", 
+        self.speed_text = self.create_text(50, 10, anchor="nw", 
                                            text=f"Speed: {self.SNAKE_SPEED} Lower Is Faster, Higher is Slower", 
                                            fill="white", font=("TkDefaultFont", 14))
 
-
-        self.snake_positions = [(100, 100), (80, 100), (60, 100)]
+        self.snake_positions = [(80, 80), (60, 80), (40, 80)]
         self.food_position = self.set_new_food_position()
         self.score = 0
 
@@ -31,7 +30,7 @@ class Snake(tk.Canvas):
         self.after(100, self.perform_actions)
 
     def draw_border(self):
-        self.create_rectangle(10, 10, 790, 810, outline="white")
+        self.create_rectangle(10, 10, 630, 350, outline="white")
 
     def load_assets(self):
         for position in self.snake_positions:
@@ -40,8 +39,8 @@ class Snake(tk.Canvas):
 
     def set_new_food_position(self):
         while True:
-            x_position = random.randint(2, 38) * 20
-            y_position = random.randint(4, 39) * 20
+            x_position = random.randint(1, 30) * 20
+            y_position = random.randint(2, 16) * 20
             food_position = (x_position, y_position)
 
             if food_position not in self.snake_positions:
