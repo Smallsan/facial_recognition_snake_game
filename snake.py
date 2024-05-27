@@ -6,9 +6,11 @@ import cv2
 
 class Snake(tk.Canvas):
     SNAKE_SPEED = 100
+    WIDTH = 640
+    HEIGHT = 480 
 
     def __init__(self):
-        super().__init__(width=640, height=360, background="black", highlightthickness=0)
+        super().__init__(width=self.WIDTH, height=self.HEIGHT, background="black", highlightthickness=0)
 
         self.speed_text = self.create_text(50, 10, anchor="nw", 
                                            text=f"Speed: {self.SNAKE_SPEED} Lower Is Faster, Higher is Slower", 
@@ -29,8 +31,10 @@ class Snake(tk.Canvas):
 
         self.after(100, self.perform_actions)
 
+
     def draw_border(self):
-        self.create_rectangle(10, 10, 630, 350, outline="white")
+        self.create_rectangle(10, 10, self.WIDTH - 10, self.HEIGHT - 10, outline="white")
+
 
     def load_assets(self):
         for position in self.snake_positions:
@@ -39,8 +43,8 @@ class Snake(tk.Canvas):
 
     def set_new_food_position(self):
         while True:
-            x_position = random.randint(1, 30) * 20
-            y_position = random.randint(2, 16) * 20
+            x_position = random.randint(2, (self.WIDTH - 30) // 20) * 20
+            y_position = random.randint(2, (self.HEIGHT - 30) // 20) * 20
             food_position = (x_position, y_position)
 
             if food_position not in self.snake_positions:
@@ -64,12 +68,13 @@ class Snake(tk.Canvas):
 
         self.after(self.SNAKE_SPEED, self.perform_actions)
 
+
     def check_collisions(self):
         head_x_position, head_y_position = self.snake_positions[0]
 
         return (
-            head_x_position in (0, 800)
-            or head_y_position in (0, 820)
+            head_x_position <= 10 or head_x_position >= self.WIDTH - 10
+            or head_y_position <= 10 or head_y_position >= self.HEIGHT - 10
             or (head_x_position, head_y_position) in self.snake_positions[1:]
         )
     
